@@ -58,6 +58,7 @@ function addImages() {
 }
 
 async function renderPhotoCard(data) {
+    console.log(data);
     const markup = await data.hits.map(image => {
       return `
       <div class="photo-card">
