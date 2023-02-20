@@ -18,13 +18,20 @@ loadMoreButton.refs.button.addEventListener('click', addImages);
 
 function searchImages(e) {
   e.preventDefault();
-  clearGallery();
-  apiSearchImages.query = e.currentTarget.elements.searchQuery.value;
-  apiSearchImages.resetpage()
   
-  if (apiSearchImages.query !== '') {
+  apiSearchImages.query = e.currentTarget.elements.searchQuery.value;
+  
+  if (apiSearchImages.query.trim() === '') {
+    return  Notify.warning(
+          'Please write current name'
+        );
+  }
+  clearGallery();
+  apiSearchImages.resetpage();
+  if (apiSearchImages.query.trim() !== '') {
     apiSearchImages.fetchImages().then(data => {
       if (data.totalHits === 0) {
+        loadMoreButton.hide();
         return Notify.warning(
           'Sorry, there are no images matching your search query. Please try again.'
         );
